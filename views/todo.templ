@@ -1,0 +1,54 @@
+package views
+
+import (
+	"go_fullstack/components"
+	"go_fullstack/types"
+)
+
+templ Todo(todos []types.Todo) {
+	@Page(true) {
+		<div class="flex flex-col items-center justify-center h-screen bg-red-100">
+			<div class="flex flex-col items-center justify-center w-full">
+				<h1 class="text-3xl font-bold text-center">Todo List</h1>
+				<div class="flex flex-col items-center justify-center">
+					<input
+						hx-post="/todo/search"
+						hx-target="#todo-list"
+						hx-trigger="keyup changed delay:500ms"
+						type="text"
+						class="w-full p-2 text-center"
+						placeholder="Search Todo"
+						name="search"
+					/>
+				</div>
+				<div class="flex flex-col items-center justify-center">
+					<button
+						class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+						type="submit"
+						hx-get="/todo"
+						hx-target="#todo-list"
+						hx-trigger="keyup changed delay:500ms"
+					>Search</button>
+				</div>
+				@components.TodoList(todos)
+				<form
+					hx-post="/todo"
+					hx-swap="beforeend"
+					hx-target="#todo-list"
+                      _="on htmx:afterRequest reset() me"
+                    
+				>
+					<input
+						type="text"
+						class="w-full p-2 text-center"
+						placeholder="Add Todo"
+						name="title"
+					/>
+					<button
+						class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+					>Add</button>
+				</form>
+			</div>
+		</div>
+	}
+}

@@ -1,0 +1,11 @@
+package components
+
+import "go_fullstack/types"
+
+templ TodoList(todos []types.Todo) {
+	<ul id="todo-list" class="flex flex-col items-center justify-center w-full">
+		for _, todo := range todos {
+			@TodoTitle(&todo)
+		}
+	</ul>
+}
